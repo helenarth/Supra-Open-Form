@@ -318,7 +318,7 @@ class SupraOpenForm_OptionsManager {
                a success message up submission.The form builder requires simple html knowledge such as what should go in in label name and value attributes.</p>
  
             <h2>Contributions</h2>
-            <p>Due to the nature of wordpress and its lack of plugin contribution functionality please for the following repo.</p>
+            <p>Due to the nature of wordpress and its lack of plugin contribution functionality please fork the following repo.</p>
             <p><a href="https://github.com/zmijevik/wp_supra_open_form" target="_blank">https://github.com/zmijevik/wp_supra_open_form</a></p>
             <p>Please keep code encapsulated, lets keep this from turning into a procedural mess!</p>
             <p>You have my guarantee that this project will <u>remain</u> free and open source.</p>
@@ -334,6 +334,7 @@ class SupraOpenForm_OptionsManager {
               <li>ability to shift input position up and down within the form</li>
               <li>Documentation</li>
               <li>jquery help tooltip optional parameter for all inputs</li>
+              <li>submission display field designator</li>
             </ul>
 
             <h2><?php echo $this->getPluginDisplayName(); echo ' '; _e('Settings', 'supra-open-form'); ?></h2>
