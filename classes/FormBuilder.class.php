@@ -84,6 +84,7 @@ class FormBuilder {
         $form_input['choices'] = array(
                                      'type'=>'text',
                                      'label'=>'Choices',
+                                     'value'=>'first,second,third,etc',
                                      'help'=>'provide comma seperated values'
                                     );
 

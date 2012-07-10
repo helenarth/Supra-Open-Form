@@ -55,7 +55,6 @@ class Form {
             $form_row .= '<div class="view_submissions" data-form-id="'.$f['id'].'">view submissions</div>';
             echo $this->form_input->wrapInput($form_row,'form_row');
         }
-
     }
 
     //@desc: retrieve the form from the databasei by the id

@@ -11,8 +11,16 @@ $( function() {
               type: "POST",
               url: ajaxurl,
               data: {process_form: true, form_input: input, action: action},
-              success: function(msg) {
-                  $('#notify').html(msg);
+              success: function(response) {
+
+                  response = JSON.parse(response);
+ 
+                  if(response.type == "redirect") {
+                      window.location = response.value;
+                  }
+                  else if(response.type == "flash") {
+                      $('#notify').html(response.value);
+                  }
               }
           });
           

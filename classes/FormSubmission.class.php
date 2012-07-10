@@ -38,8 +38,9 @@ class FormSubmission {
 
         $this->form_id = $form_id;
 
-        $this->getSubmission($this->last_submission_id);
+        $this->wp_submission_response();
 
+        //$this->getSubmission($this->last_submission_id);
     }
 
     private function insertSubmission($form_id,$submission) {
@@ -54,11 +55,23 @@ class FormSubmission {
                           ");
 
         $this->last_submission_id = $this->db->lastInsertedId();
+    }
 
-        $success_msg = "Form submission successful";
+    private function wp_submission_response() {
+        $this->form->setForm($this->form_id);
 
-        echo $this->form_input->wrapInput($success_msg,'success');        
-        echo $this->displaySubmission($this->last_submission_id);     
+        $wp_post_id = $this->form->getForm('wp_post_id');
+
+        if(!empty($wp_post_id)) {
+            echo json_encode(array('type'=>'redirect','value'=>get_page_link($wp_post_id)));
+        }
+        else {
+            $db_succ_msg = $this->form->getForm('success_msg');
+            $def_succ_msg = "Form submission successful";
+            $succ_msg = (empty($db_succ_msg)) ? $def_succ_msg : $db_succ_msg;
+            $succ_msg = $this->form_input->wrapInput($succ_msg,'success');   
+            echo json_encode(array('type'=>'flash','value'=>$succ_msg));
+        }
     }
 
     private function getSubmission($id) {
@@ -92,7 +105,11 @@ class FormSubmission {
     private function getSubmissionsByFormId($id) {
         return $this->db->findBy($this->table,'*','form_id ='.$id);
     }
-    
+   
+    public function countSubmissionsByFormId($id) {
+        return $this->db->findOneBy($this->table,'COUNT(*)','form_id ='.$id);
+    }
+ 
     private function getSubmissions() {
         return $this->db->find($this->table);
     }

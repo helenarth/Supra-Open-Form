@@ -38,8 +38,7 @@
     $input_attr['add_attr']     = array('type'=>'submit','value'=>'Add Attribute');
     $input_attr['rem_attr']     = array('type'=>'submit','value'=>'Remove Attribute');
 
-wp_enqueue_script( 'jquery', plugins_url('/js/jquery.js', __FILE__) );
-wp_enqueue_script( 'global', plugins_url('/js/global.js', __FILE__) );
+wp_enqueue_script( 'global', plugins_url('/js/global.js', __FILE__), array('jquery') );
 wp_enqueue_script( 'form_builder', plugins_url('/js/form_builder.js', __FILE__) );
 wp_enqueue_script( 'input_crud', plugins_url('/js/input_crud.js', __FILE__) );
 wp_enqueue_style( 'form_buildercss', plugins_url('/css/form_builder.css', __FILE__) );

@@ -90,13 +90,13 @@ class SupraOpenForm_Plugin extends SupraOpenForm_LifeCycle {
         require_once(dirname(__FILE__).'/sof_form_builder.php');
     }
 
-    public function sofFormManager() {
-        require_once(dirname(__FILE__).'/sof_form_manager.php');
+    public function sofFormInfo() {
+        require_once(dirname(__FILE__).'/sof_form_info.php');
     }
 
     public function callAdminActions() {
-        add_menu_page("Supra Open Form", "Supra Open Form", "manage_options", "supra_open_form", array(&$this,"sofFormBuilder"));
-        add_submenu_page("supra_open_form", "Form Manager", "Form Manager", "manage_options", "sof_manager", array(&$this,"sofFormManager"));
+        add_menu_page("Supra Open Form", "Supra Open Form", "manage_options", "supra_open_form", array(&$this,"SettingsPage"));
+        add_submenu_page("supra_open_form", "Form Info", "Form Info", "manage_options", "sof_info", array(&$this,"sofFormInfo"));
         add_submenu_page("supra_open_form", "Form Builder", "Form Builder", "manage_options", "sof_builder", array(&$this,"sofFormBuilder"));
     }
 
@@ -146,7 +146,7 @@ class SupraOpenForm_Plugin extends SupraOpenForm_LifeCycle {
 
         // Adding scripts & styles to all pages
         // Examples:
-        //        wp_enqueue_script('jquery');
+                  wp_enqueue_script('jquery');
         //        wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
         //        wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
 
@@ -154,6 +154,9 @@ class SupraOpenForm_Plugin extends SupraOpenForm_LifeCycle {
         // Register short codes
         // http://plugin.michael-simpson.com/?page_id=39
 
+        include_once('SupraOpenForm_RenderFormShortCode.php');
+        $sc = new SupraOpenForm_RenderFormShortCode();
+        $sc->register('supra-open-form');
 
         // Register AJAX hooks
         // http://plugin.michael-simpson.com/?page_id=41

@@ -308,6 +308,34 @@ class SupraOpenForm_OptionsManager {
             </tr>
             </tbody></table>
 
+            <h2></h2>          
+          
+ 
+            <h2>Description</h2>
+            <p>The purpose of this plugin is to provide blog admin with an interactive form to create, update and display forms throughout the site.
+               Shortcode can be provided in whatever page one wishes to display the form. The shortcodes are provded in the Form Info tab. When creating 
+               the form you have the option to provide the landing page or a success message instead. If the landing page is left blank the form will display
+               a success message up submission.The form builder requires simple html knowledge such as what should go in in label name and value attributes.</p>
+ 
+            <h2>Contributions</h2>
+            <p>Due to the nature of wordpress and its lack of plugin contribution functionality please for the following repo.</p>
+            <p><a href="https://github.com/zmijevik/wp_supra_open_form" target="_blank">https://github.com/zmijevik/wp_supra_open_form</a></p>
+            <p>Please keep code encapsulated, lets keep this from turning into a procedural mess!</p>
+            <p>You have my guarantee that this project will <u>remain</u> free and open source.</p>
+            <p>Feel free to contact me @ zmijevik@hotmail.com regarding plugin issues and requests.</p>
+
+            <h2>Future Releases</h2>
+            <p>Below is a list of features that will be added as the development progresses further.</p>
+            <ol>
+              <li>Combobox input</li>
+              <li>Radiogroup input</li>
+              <li>Email Notification upon submission</li>
+              <li>builder interface for non html savvy people</li>
+              <li>ability to shift input position up and down within the form</li>
+              <li>Documentation</li>
+              <li>jquery help tooltip optional parameter for all inputs</li>
+            </ul>
+
             <h2><?php echo $this->getPluginDisplayName(); echo ' '; _e('Settings', 'supra-open-form'); ?></h2>
 
             <form method="post" action="">

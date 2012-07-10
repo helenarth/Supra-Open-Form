@@ -68,6 +68,28 @@
  
       
 
+    #sof_info th, td {
+        width: 33%;
+        padding: 10px;
+    }
+
+    #sof_info_row #form_shortcode {
+        background-color: yellow;
+    }
+
+    #sof_info_row #form_name, #form_submission_count span {
+        text-decoration: underline;
+    }
+
+    #sof_info .odd {
+        background-color: #ededed;
+    }
+
+    #sof_info .even {
+        background-color: #bdbdbd;
+    }
+
+
       .form_row {
           padding: 10px 5px 10px 0px;
       }
@@ -79,11 +101,10 @@
  
       .form_row .view_submissions, .form_row .view_form, .form_row .edit_form, .fs_row .view_submission {
           text-decoration: underline;
-          color: darkred;
           font-weight: bold;
       }
 
-      #form .form_name, #form_submission_header, #form_submissions_header {
+      #open_form .form_name, #form_submission_header, #form_submissions_header {
           font-size: 18px;
           font-weight:bold;
           padding: 10px 10px 10px 0px;
