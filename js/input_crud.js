@@ -4,11 +4,12 @@ $( function() {
 
       $('#update_input').hide();
 
+
       $('#add_input').click( function() {
 
-      var input       = $('#input_builder').serialize().replace(/%5B%5D/g, '[]');
+          var input = $('#input_builder').serialize().replace(/%5B%5D/g, '[]');
 
-      $.ajax({
+          $.ajax({
               type: "POST",
               url: ajaxurl,
               data: {
@@ -30,6 +31,10 @@ $( function() {
           var input_name  = $(this).data('input-name');
           var input_type  = $(this).data('input-type');
 
+                  $('#input_type').val(input_type);
+                  $('#input_type').click();
+
+          var ajaxCall = function () {
           $.ajax({
               type: "POST",
               url: ajaxurl,
@@ -42,13 +47,33 @@ $( function() {
               success: function(msg) {
                   $('#input_builder').html(msg);
                   $('#input_type').val(input_type);
-                  $('#add_attr').removeAttr('disabled');
-                  $('#rem_attr').removeAttr('disabled');
                   $('#add_input').hide();
                   $('#update_input').show();
               }
           });
+
+          };
+          setTimeout( ajaxCall, 500);
       });
+
+      function showAdders() {
+
+          switch(input_type) {
+              case "radiogroup":
+                  $('#add_attr').removeAttr('disabled');
+                  $('#rem_attr').removeAttr('disabled');
+              break;
+              case "combobox":
+                  $('#add_attr').removeAttr('disabled');
+                  $('#rem_attr').removeAttr('disabled');
+              break;
+              default:
+                  $('#add_attr').removeAttr('disabled');
+                  $('#rem_attr').removeAttr('disabled');
+              break;
+          }
+
+      }
 
       $('#update_input').click( function () {
 

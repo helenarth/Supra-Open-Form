@@ -37,11 +37,15 @@
     $build_tools['save_form']   = array('type'=>'submit','value'=>'Save Form');
     $input_attr['add_attr']     = array('type'=>'submit','value'=>'Add Attribute');
     $input_attr['rem_attr']     = array('type'=>'submit','value'=>'Remove Attribute');
+    $input_radio['add_radio']   = array('type'=>'submit','value'=>'Add Radio');
+    $input_radio['rem_radio']   = array('type'=>'submit','value'=>'Remove Radio');
+    $input_check['add_check']   = array('type'=>'submit','value'=>'Add Checkbox');
+    $input_check['rem_check']   = array('type'=>'submit','value'=>'Remove Checkbox');
 
-wp_enqueue_script( 'global', plugins_url('/js/global.js', __FILE__), array('jquery') );
-wp_enqueue_script( 'form_builder', plugins_url('/js/form_builder.js', __FILE__) );
-wp_enqueue_script( 'input_crud', plugins_url('/js/input_crud.js', __FILE__) );
-wp_enqueue_style( 'form_buildercss', plugins_url('/css/form_builder.css', __FILE__) );
+    wp_enqueue_script( 'global', plugins_url('/js/global.js', __FILE__), array('jquery') );
+    wp_enqueue_script( 'form_builder', plugins_url('/js/form_builder.js', __FILE__) );
+    wp_enqueue_script( 'input_crud', plugins_url('/js/input_crud.js', __FILE__) );
+    wp_enqueue_style( 'form_buildercss', plugins_url('/css/form_builder.css', __FILE__) );
 ?>
     <div id="open_form">
       <div id="notify"></div>
@@ -54,6 +58,8 @@ wp_enqueue_style( 'form_buildercss', plugins_url('/css/form_builder.css', __FILE
           <div id="input_specs">
             <? $fi->renderAndDisplay($input_types);?>
             <? $fi->renderAndDisplay($input_attr);?>
+            <? $fi->renderAndDisplay($input_radio);?>
+            <? $fi->renderAndDisplay($input_check);?>
           </div>
         </div>
         <form id="input_builder">

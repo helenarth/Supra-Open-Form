@@ -71,9 +71,9 @@ class FormInput {
                      'textarea',
                      'password',
                      'hidden',
-                     //'radiogroup',
+                     'radiogroup',
                      'checkbox',
-                     //'combobox',
+                     'combobox',
                      'select',
                      'submit'
                     );

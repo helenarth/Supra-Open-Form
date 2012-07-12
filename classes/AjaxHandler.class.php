@@ -18,6 +18,9 @@ class AjaxHandler {
         else if(!empty($request['add_attr'])) {
             $fb->inputBuilder($request);
         }
+        else if(!empty($request['add_radio'])) {
+            $fb->inputBuilder($request);
+        }
         else if(!empty($request['clear_form'])) {
             $form->clearForm($request['form_name']);
         }

@@ -27,8 +27,11 @@ class FormInputCrud {
 
         //set the input parameters for the inputprocessor
         foreach((array)$input_params as $k=>$v) {
-            if(!strstr($k,'input_attr'))
+            if(!strstr($k,'input_attr') 
+               && !strstr($k,'radio') 
+               && !strstr($k,'check')) {
                 $input_param[$k] = $v;
+            }
         }
 
         //set the array of attributes for the inputprocessor
@@ -36,20 +39,33 @@ class FormInputCrud {
              $input_param['attr'][$v] = $input_params['input_attr_val'][$k];
         }
 
-        $choices = $input_param['choices'];
-
-        //parse choices from csv string into an array
-        if(!empty($choices)) {
-            $choices = urldecode($choices);
-            $choices = explode(',',$choices);
+        foreach((array)$input_params['radio_val'] as $k=>$v) {
+             $radios[] = array(
+                               'label'=>$input_params['radio_label'][$k],
+                               'value'=>$input_params['radio_val'][$k]
+                              );
         }
 
+        switch($input_type) {
+            case "select": 
+                $choices = $this->selectParseChoices($input_param);
+            break;
+            case "radiogroup":
+                $radios = $this->radiogroupParseRadios($input_params); 
+            break;
+            case "combobox":
+                $boxes = $this->comboboxParseCheckboxes($input_params);
+            break;
+        }
+ 
         $input_arr[$input_param['name']] = array(
                             'type'=>$input_type,
                             'label'=>$input_param['label'],
                             'value'=>$input_param['value'],
                             'attr'=>$input_param['attr'],
                             'choices'=>$choices,
+                            'boxes'=>$boxes,
+                            'radios'=>$radios,
                             'add_empty'=>$input_param['add_empty']
                            );
 
@@ -59,13 +75,52 @@ class FormInputCrud {
         }
         else 
             $_SESSION['open_form'][$form_id]['inputs'][] = $input_arr;
- 
+
 
         //display the input as editbale
         if($display) {
             $this->form_input->renderAndDisplay($input_arr,true,true);
         }
     }
+
+    public function selectParseChoices($input_param) {
+        $choices = $input_param['choices'];
+
+        //parse choices from csv string into an array
+        if(!empty($choices)) {
+            $choices = urldecode($choices);
+            $choices = explode(',',$choices);
+        }
+
+        return $choices;
+    }
+
+    public function radiogroupParseRadios($input_params) {
+
+        foreach((array)$input_params['radio_val'] as $k=>$v) {
+             $radios[] = array(
+                               'label'=>$input_params['radio_label'][$k],
+                               'value'=>$input_params['radio_val'][$k]
+                              );
+        }
+
+        return $radios;
+    }
+
+    public function comboboxParseCheckboxes($input_params) {
+    
+        foreach((array)$input_params['check_value'] as $k=>$v) {
+             $name = $input_params['check_name'][$k];
+
+             $boxes[$name] = array(
+                                   'label'=>$input_params['check_label'][$k],
+                                   'value'=>$input_params['check_value'][$k]
+                                  );
+        }
+
+        return $boxes;
+    }
+
 
     //@desc: display input builder for the input to edit
     public function editInput($request) {
@@ -118,6 +173,21 @@ class FormInputCrud {
             }
             $attr['input_type'] = 'attribute';
             $this->form_builder->inputBuilder($attr,true);
+        }
+
+       foreach((array)$input_params['boxes'] as $name=>$params) {
+             $check['check_name']['value']  = $name;
+             $check['check_value']['value'] = $params['value'];
+             $check['check_label']['value'] =  $params['label'];
+             $check['input_type'] = 'check';
+             $this->form_builder->inputBuilder($check,true);
+        }
+
+       foreach((array)$input_params['radios'] as $name=>$params) {
+             $check['radio_val']['value'] =  $params['value'];
+             $check['radio_label']['value'] =  $params['label'];
+             $check['input_type'] = 'radio';
+             $this->form_builder->inputBuilder($check,true);
         }
     }
 

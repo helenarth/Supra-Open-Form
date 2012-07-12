@@ -16,11 +16,19 @@ class FormBuilder {
         switch($input_type) {
 
             case "combobox":
+                $form_input = $this->renderComboBoxBuilder();
             break;
             case "radiogroup":
+                $form_input = $this->renderRadioGroupBuilder();
             break;
             case "select":
                 $form_input = $this->renderSelectBuilder();
+            break;
+            case "radio":
+                $form_input = $this->renderRadioAdder();
+            break;
+            case "check":
+                $form_input = $this->renderCheckAdder();
             break;
             case "attribute":
                 $form_input = $this->renderAttributeAdder();
@@ -41,10 +49,10 @@ class FormBuilder {
         //print_r($_SESSION);
         //print_r($form_input);
         //echo "</pre>";
-        
-        if($input_type == "attribute"){
+
+        if(in_array($input_type,array('attribute','radio','check'))) {
             $form_input = $this->form_input->render($form_input);
-            echo $this->form_input->wrapInput($form_input,'attribute');
+            echo $this->form_input->wrapInput($form_input,$input_type);
         } 
         else {
             $this->form_input->renderAndDisplay($form_input);
@@ -59,7 +67,7 @@ class FormBuilder {
             $array[$k] = array_merge($v,$defaults[$k]);
         }
 
-        return array_merge($form_inputs,$array);
+        return array_merge($form_inputs,(array)$array);
     }
 
     function renderSelectBuilder() {
@@ -67,12 +75,12 @@ class FormBuilder {
 
         $form_input['name'] = array(
                                     'type'=>'text',
-                                    'label'=>'Name'
+                                    'label'=>'Select Name'
                                    );
 
         $form_input['label'] = array(
                                      'type'=>'text',
-                                     'label'=>'Label'
+                                     'label'=>'Select Label'
                                     );
 
         $form_input['add_empty'] = array(
@@ -86,6 +94,33 @@ class FormBuilder {
                                      'label'=>'Choices',
                                      'value'=>'first,second,third,etc',
                                      'help'=>'provide comma seperated values'
+                                    );
+
+        return $form_input;
+    }
+
+    function renderRadioGroupBuilder() {
+
+
+        $form_input['name'] = array(
+                                    'type'=>'text',
+                                    'label'=>'Radiogroup Name'
+                                   );
+
+
+        $form_input['label'] = array(
+                                     'type'=>'text',
+                                     'label'=>'Radiogroup Label'
+                                    );
+
+        return $form_input;
+    }
+
+    function renderComboBoxBuilder() {
+
+        $form_input['label'] = array(
+                                     'type'=>'text',
+                                     'label'=>'Combobox Label'
                                     );
 
         return $form_input;
@@ -127,6 +162,46 @@ class FormBuilder {
                                           'label'=>'Attribute Value',
                                           'arrayable'=>true
                                          );
+
+        return $form_input;
+    }
+
+    function renderRadioAdder() {
+
+        $form_input['radio_label'] = array(
+                                     'type'=>'text',
+                                     'label'=>'Radio Label',
+                                     'arrayable'=>true
+                                    );
+
+        $form_input['radio_val'] = array(
+                                     'type'=>'text',
+                                     'label'=>'Radio Value',
+                                     'arrayable'=>true
+                                    );
+
+        return $form_input;
+    }
+
+    function renderCheckAdder() {
+
+        $form_input['check_name'] = array(
+                                     'type'=>'text',
+                                     'label'=>'Checkbox Name',
+                                     'arrayable'=>true
+                                    );
+
+        $form_input['check_label'] = array(
+                                     'type'=>'text',
+                                     'label'=>'Checkbox Label',
+                                     'arrayable'=>true
+                                    );
+
+        $form_input['check_value'] = array(
+                                     'type'=>'hidden',
+                                     'value'=>'true',
+                                     'arrayable'=>true
+                                    );
 
         return $form_input;
     }

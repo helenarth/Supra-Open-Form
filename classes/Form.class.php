@@ -136,8 +136,8 @@ class Form {
         }
         else {
             $this->db->execute("
-                                INSERT INTO ".$this->table."(`id`,`name`,`action`,`inputs`) 
-                                VALUES (".$form_id.",'".$form_name."','".$form_action."','".$inputs."')
+                                INSERT INTO ".$this->table."(`id`,`name`,`wp_post_id`,`success_msg`,`inputs`) 
+                                VALUES (".$form_id.",'".$form_name."','".$wp_post_id."','".$success_msg."','".$inputs."')
                                ");
         }
 

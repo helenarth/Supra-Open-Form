@@ -86,16 +86,41 @@ class FormSubmission {
         $form = $this->form->getFormById($form_id);
 
         //get the labels
-        foreach($form['inputs'] as $input) {
-     
-            foreach($input as $name=>$attrs) {
-                $inputs[$name]['label'] = $attrs['label'];
-            }
+        foreach($form['inputs'] as $num=>$inputs) {
 
-            foreach($submission as $k=>$v) {
-                $new_submission[$k]['label'] = $inputs[$k]['label'];
-                    
-                $new_submission[$k]['value'] = $v;
+
+            foreach($inputs as $name=>$input) {
+                if($input['type'] == "combobox") {
+                    foreach($input['boxes'] as $b_name=>$box) {
+                        foreach($submission as $k=>$v) {
+                            if($b_name == $k) {
+                                $new_submission['combobox'][$num]['label'] = $input['label'];
+                                $new_submission['combobox'][$num]['values'][$b_name] = $box['label'];
+                            } 
+                        }                                                
+                    }
+                }
+                else if($input['type'] =="radiogroup") {
+                    foreach($input['radios'] as $name=>$radio) {
+                        foreach($submission as $k=>$v) {
+                            if($radio['value'] == $v) {
+                                $new_submission[$name]['label'] = $input['label'];
+                                $new_submission[$name]['value'] = $radio['label'];
+                            }
+                        }
+                    }
+                }
+                else {
+ 
+                    $i[$name]['label'] = $input['label'];
+
+                    foreach($submission as $k=>$v) {
+                        if($name == $k) {
+                            $new_submission[$k]['label'] = $i[$k]['label'];
+                            $new_submission[$k]['value'] = $v;
+                        }
+                    }
+                }
             }
         }
 
@@ -136,11 +161,21 @@ class FormSubmission {
         $form_name = $this->form->getForm('name');
 
         echo $this->form_input->wrapInput($form_name,'form_name');
-
-        foreach((array)$submission['submission'] as $input) {
+       
+        foreach((array)$submission['submission'] as $k=>$input) {
             $input_row = null;
-            $input_row .= $this->form_input->wrapInput($input['label'],'input_label');
-            $input_row .= $this->form_input->wrapInput($input['value'],'input_value');
+
+            if($k === "combobox") {
+                foreach($input as $key=>$val) {
+                    $input_row .= $this->form_input->wrapInput($val['label'],'input_label');
+                    $values = implode(',',(array)$val['values']);
+                    $input_row .= $this->form_input->wrapInput($values,'input_value');
+                }
+            }
+            else {
+                $input_row .= $this->form_input->wrapInput($input['label'],'input_label');
+                $input_row .= $this->form_input->wrapInput($input['value'],'input_value');
+            }
             echo $this->form_input->wrapInput($input_row,'input_row');
         }
     }

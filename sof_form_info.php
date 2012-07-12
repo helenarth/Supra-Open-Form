@@ -19,7 +19,7 @@
       </thead>
       <tbody> 
       <? 
-        foreach($forms as $i=>$f):
+        foreach((array)$forms as $i=>$f):
 
           $class = ($i%2) ? "even" : "odd";
         
