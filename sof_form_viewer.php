@@ -17,7 +17,7 @@
 
 ?>
 <div id="notify"></div>
-<div id="open_form">
+<div id="open_form_viewer">
   <? $form->insertInput($form_head);?>
   <? $form->display(null,true);?>
 </div>

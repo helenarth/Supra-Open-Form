@@ -213,14 +213,11 @@ class SupraOpenForm_OptionsManager {
             <h2>Future Releases</h2>
             <p>Below is a list of features that will be added as the development progresses further.</p>
             <ol>
-              <li>Combobox input</li>
-              <li>Radiogroup input</li>
-              <li>Email Notification upon submission</li>
               <li>builder interface for non html savvy people</li>
               <li>ability to shift input position up and down within the form</li>
-              <li>Documentation</li>
               <li>jquery help tooltip optional parameter for all inputs</li>
               <li>submission display field designator</li>
+              <li>Documentation</li>
             </ul>
 
             <h2><?php echo $this->getPluginDisplayName(); echo ' '; _e('Settings', 'supra-open-form'); ?></h2>

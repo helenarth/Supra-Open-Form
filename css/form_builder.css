@@ -104,7 +104,7 @@
           font-weight: bold;
       }
 
-      #open_form .form_name, #form_submission_header, #form_submissions_header {
+      #open_form .form_name, #open_form_viewer .form_name, #form_submission_header, #form_submissions_header {
           font-size: 18px;
           font-weight:bold;
           padding: 10px 10px 10px 0px;
@@ -132,4 +132,21 @@
       .input_row .input_value {
           font-style: italic;
           font-size: 12px;
+      }
+
+
+
+      #open_form_viewer .input label,
+      #open_form_viewer .input legend {
+          display: block;
+          font-weight: bold;
+      }
+
+      #open_form_viewer .input input,
+      #open_form_viewer .input textarea {
+          display: block;
+      }
+
+      #open_form_viewer .input input[type="radio"] {
+          display: inline;
       }

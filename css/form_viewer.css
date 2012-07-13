@@ -7,6 +7,6 @@
     display: block;
 }
 
-.open_form .input input[type="radio"] {
+#open_form .input input[type="radio"] {
     display: inline;
 }

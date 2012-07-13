@@ -67,8 +67,8 @@ class FormSubmission {
         $notification_email = $this->plugin_bridge->getMetaOption('notify_email');
 
         if(!empty($notification_email)) {
-            $sumbmission = $this->displaySubmission($this->last_submission_id,false);
-            wp_mail($notification_email,'test',$submission);
+            $submission = $this->displaySubmissionEmail($this->last_submission_id);
+            wp_mail($notification_email,$submission['form_name'] . ' Submission Received',$submission['submission']);
         }
 
         if(!empty($wp_post_id)) {
@@ -174,6 +174,8 @@ class FormSubmission {
 
         $submission = $this->getSubmission($id);
 
+        $form_id = $submission['form_id'];
+
         $this->form->setForm($form_id);
 
         $form_name = $this->form->getForm('name');
@@ -202,6 +204,38 @@ class FormSubmission {
         else 
             return $submitted;
     }
+
+    public function displaySubmissionEmail($id) {
+
+        $submission = $this->getSubmission($id);
+
+        $form_id = $submission['form_id'];
+
+        $this->form->setForm($form_id);
+
+        $form_name = $this->form->getForm('name');
+
+        $submitted .= $this->form_input->wrapInput('<h2>'.$form_name.'</h2>','form_name');
+
+        foreach((array)$submission['submission'] as $k=>$input) {
+            $input_row = null;
+
+            if($k === "combobox") {
+                foreach($input as $key=>$val) {
+                    $input_row .= '<b>' . $val['label'] . ':</b> ';
+                    $input_row .= '<i>' . implode(',',(array)$val['values']);
+                }
+            }
+            else {
+                $input_row .= '<b>' . $input['label'] . ':</b> ';
+                $input_row .= '<i>' . $input['value'] . '</i>';
+            }
+            $submitted .= $this->form_input->wrapInput($input_row,'input_row');
+        }
+
+        return array('form_name'=>$form_name,'submission'=>$submitted);
+    }
+
 
     private function toString($submission,$field = 'datetime') {
         switch($field) {
