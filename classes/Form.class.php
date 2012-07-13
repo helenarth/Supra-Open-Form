@@ -2,11 +2,12 @@
 require_once(dirname(__FILE__).'/UsefulDb/ORM.php');
 require_once(dirname(__FILE__).'/FormInput.class.php');
 require_once(dirname(__FILE__).'/FormBuilder.class.php');
+require_once(dirname(__FILE__).'/FormSubmission.class.php');
 require_once(dirname(__FILE__).'/PluginBridge.class.php');
 
 class Form {
 
-    private $db, $form_input, $form_builder, $table;
+    private $db, $form_input, $form_builder, $form_submission, $table;
     private $form = array();
 
     public function __construct($id = null) {
@@ -90,11 +91,17 @@ class Form {
         return $form;
     }
 
-    public function deleteForm($form_name) {
+    public function deleteForm($id) {
+
+        $fs = new FormSubmission(&$this);
+
+        $fs->deleteSubmissionsByFormId($id);
+
         $this->db->execute("
                             DELETE FROM ".$this->table."
-                            WHERE name = '".$form_name."'
+                            WHERE id = '".$id."'
                            ");
+       
     }
 
     //@desc: clear the form from session
@@ -206,4 +213,3 @@ class Form {
         return $_SESSION['open_form'][$form_id]['inputs'][$key];
     }
 }
-

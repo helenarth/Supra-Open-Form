@@ -5,19 +5,21 @@ require_once(dirname(__FILE__).'/FormInput.class.php');
 
 class FormSubmission {
 
-    private $db, $form_input, $form, $form_id, $last_submission_id, $table;
+    private $db, $form_input, $plugin_bridge, $form, $form_id, $last_submission_id, $table;
 
-    public function __construct($form_id = null) {
+    public function __construct($form = null) {
+
         $this->db = new ORM(DB_NAME,DB_HOST,DB_USER,DB_PASSWORD);
 
-        $this->form       = new Form();
         $this->form_input = new FormInput();
 
-        $plugin_bridge = new PluginBridge();
-        $this->table = $plugin_bridge->getTablePrefix('open_form_submissions');
+        $this->plugin_bridge = new PluginBridge();
+        $this->table = $this->plugin_bridge->getTablePrefix('open_form_submissions');
 
-        if(!empty($form_id))
-            $this->form_id = $form_id;
+        if(!empty($form))
+            $this->form_id = $form;
+        else 
+            $this->form = new Form();
     }
 
     public function setFormId($form_id) {
@@ -61,6 +63,13 @@ class FormSubmission {
         $this->form->setForm($this->form_id);
 
         $wp_post_id = $this->form->getForm('wp_post_id');
+
+        $notification_email = $this->plugin_bridge->getMetaOption('notify_email');
+
+        if(!empty($notification_email)) {
+            $sumbmission = $this->displaySubmission($this->last_submission_id,false);
+            wp_mail($notification_email,'test',$submission);
+        }
 
         if(!empty($wp_post_id)) {
             echo json_encode(array('type'=>'redirect','value'=>get_page_link($wp_post_id)));
@@ -134,6 +143,15 @@ class FormSubmission {
     public function countSubmissionsByFormId($id) {
         return $this->db->findOneBy($this->table,'COUNT(*)','form_id ='.$id);
     }
+
+    public function deleteSubmissionsByFormId($id) {
+
+        $this->db->execute("
+                            DELETE FROM ".$this->table."
+                            WHERE form_id = '".$id."'
+                           ");
+
+    }
  
     private function getSubmissions() {
         return $this->db->find($this->table);
@@ -152,7 +170,7 @@ class FormSubmission {
 
     }
     
-    public function displaySubmission($id) {
+    public function displaySubmission($id, $display = true) {
 
         $submission = $this->getSubmission($id);
 
@@ -160,7 +178,7 @@ class FormSubmission {
 
         $form_name = $this->form->getForm('name');
 
-        echo $this->form_input->wrapInput($form_name,'form_name');
+        $submitted .= $this->form_input->wrapInput($form_name,'form_name');
        
         foreach((array)$submission['submission'] as $k=>$input) {
             $input_row = null;
@@ -176,8 +194,13 @@ class FormSubmission {
                 $input_row .= $this->form_input->wrapInput($input['label'],'input_label');
                 $input_row .= $this->form_input->wrapInput($input['value'],'input_value');
             }
-            echo $this->form_input->wrapInput($input_row,'input_row');
+            $submitted .= $this->form_input->wrapInput($input_row,'input_row');
         }
+
+        if($display)
+            echo $submitted;
+        else 
+            return $submitted;
     }
 
     private function toString($submission,$field = 'datetime') {

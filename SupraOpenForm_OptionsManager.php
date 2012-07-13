@@ -1,23 +1,4 @@
 <?php
-/*
-    "WordPress Plugin Template" Copyright (C) 2011 Michael Simpson  (email : michael.d.simpson@gmail.com)
-
-    This file is part of WordPress Plugin Template for WordPress.
-
-    WordPress Plugin Template is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    WordPress Plugin Template is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Contact Form to Database Extension.
-    If not, see <http://www.gnu.org/licenses/>.
-*/
 
 class SupraOpenForm_OptionsManager {
 
@@ -25,38 +6,15 @@ class SupraOpenForm_OptionsManager {
         return get_class($this) . '_';
     }
 
-
-    /**
-     * Define your options meta data here as an array, where each element in the array
-     * @return array of key=>display-name and/or key=>array(display-name, choice1, choice2, ...)
-     * key: an option name for the key (this name will be given a prefix when stored in
-     * the database to ensure it does not conflict with other plugin options)
-     * value: can be one of two things:
-     *   (1) string display name for displaying the name of the option to the user on a web page
-     *   (2) array where the first element is a display name (as above) and the rest of
-     *       the elements are choices of values that the user can select
-     * e.g.
-     * array(
-     *   'item' => 'Item:',             // key => display-name
-     *   'rating' => array(             // key => array ( display-name, choice1, choice2, ...)
-     *       'CanDoOperationX' => array('Can do Operation X', 'Administrator', 'Editor', 'Author', 'Contributor', 'Subscriber'),
-     *       'Rating:', 'Excellent', 'Good', 'Fair', 'Poor')
-     */
     public function getOptionMetaData() {
-        return array();
+        //return array('notify_email'=>'Notification Email:');
+        return 'fart';
     }
 
-    /**
-     * @return array of string name of options
-     */
     public function getOptionNames() {
         return array_keys($this->getOptionMetaData());
     }
 
-    /**
-     * Override this method to initialize options to default values and save to the database with add_option
-     * @return void
-     */
     protected function initOptions() {
     }
 
@@ -74,20 +32,10 @@ class SupraOpenForm_OptionsManager {
         }
     }
 
-    /**
-     * @return string display name of the plugin to show as a name/title in HTML.
-     * Just returns the class name. Override this method to return something more readable
-     */
     public function getPluginDisplayName() {
         return get_class($this);
     }
 
-    /**
-     * Get the prefixed version input $name suitable for storing in WP options
-     * Idempotent: if $optionName is already prefixed, it is not prefixed again, it is returned without change
-     * @param  $name string option name to prefix. Defined in settings.php and set as keys of $this->optionMetaData
-     * @return string
-     */
     public function prefix($name) {
         $optionNamePrefix = $this->getOptionNamePrefix();
         if (strpos($name, $optionNamePrefix) === 0) { // 0 but not false
@@ -96,12 +44,6 @@ class SupraOpenForm_OptionsManager {
         return $optionNamePrefix . $name;
     }
 
-    /**
-     * Remove the prefix from the input $name.
-     * Idempotent: If no prefix found, just returns what was input.
-     * @param  $name string
-     * @return string $optionName without the prefix.
-     */
     public function &unPrefix($name) {
         $optionNamePrefix = $this->getOptionNamePrefix();
         if (strpos($name, $optionNamePrefix) === 0) {
@@ -110,14 +52,6 @@ class SupraOpenForm_OptionsManager {
         return $name;
     }
 
-    /**
-     * A wrapper function delegating to WP get_option() but it prefixes the input $optionName
-     * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param $optionName string defined in settings.php and set as keys of $this->optionMetaData
-     * @param $default string default value to return if the option is not set
-     * @return string the value from delegated call to get_option(), or optional default value
-     * if option is not set.
-     */
     public function getOption($optionName, $default = null) {
         $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
         $retVal = get_option($prefixedOptionName);
@@ -127,51 +61,21 @@ class SupraOpenForm_OptionsManager {
         return $retVal;
     }
 
-    /**
-     * A wrapper function delegating to WP delete_option() but it prefixes the input $optionName
-     * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param  $optionName string defined in settings.php and set as keys of $this->optionMetaData
-     * @return bool from delegated call to delete_option()
-     */
     public function deleteOption($optionName) {
         $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
         return delete_option($prefixedOptionName);
     }
 
-    /**
-     * A wrapper function delegating to WP add_option() but it prefixes the input $optionName
-     * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param  $optionName string defined in settings.php and set as keys of $this->optionMetaData
-     * @param  $value mixed the new value
-     * @return null from delegated call to delete_option()
-     */
     public function addOption($optionName, $value) {
         $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
         return add_option($prefixedOptionName, $value);
     }
 
-    /**
-     * A wrapper function delegating to WP add_option() but it prefixes the input $optionName
-     * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param  $optionName string defined in settings.php and set as keys of $this->optionMetaData
-     * @param  $value mixed the new value
-     * @return null from delegated call to delete_option()
-     */
     public function updateOption($optionName, $value) {
         $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
         return update_option($prefixedOptionName, $value);
     }
 
-    /**
-     * A Role Option is an option defined in getOptionMetaData() as a choice of WP standard roles, e.g.
-     * 'CanDoOperationX' => array('Can do Operation X', 'Administrator', 'Editor', 'Author', 'Contributor', 'Subscriber')
-     * The idea is use an option to indicate what role level a user must minimally have in order to do some operation.
-     * So if a Role Option 'CanDoOperationX' is set to 'Editor' then users which role 'Editor' or above should be
-     * able to do Operation X.
-     * Also see: canUserDoRoleOption()
-     * @param  $optionName
-     * @return string role name
-     */
     public function getRoleOption($optionName) {
         $roleAllowed = $this->getOption($optionName);
         if (!$roleAllowed || $roleAllowed == '') {
@@ -180,12 +84,6 @@ class SupraOpenForm_OptionsManager {
         return $roleAllowed;
     }
 
-    /**
-     * Given a WP role name, return a WP capability which only that role and roles above it have
-     * http://codex.wordpress.org/Roles_and_Capabilities
-     * @param  $roleName
-     * @return string a WP capability or '' if unknown input role
-     */
     protected function roleToCapability($roleName) {
         switch ($roleName) {
             case 'Super Admin':
@@ -206,10 +104,6 @@ class SupraOpenForm_OptionsManager {
         return '';
     }
 
-    /**
-     * @param $roleName string a standard WP role name like 'Administrator'
-     * @return bool
-     */
     public function isUserRoleEqualOrBetterThan($roleName) {
         if ('Anyone' == $roleName) {
             return true;
@@ -218,10 +112,6 @@ class SupraOpenForm_OptionsManager {
         return current_user_can($capability);
     }
 
-    /**
-     * @param  $optionName string name of a Role option (see comments in getRoleOption())
-     * @return bool indicates if the user has adequate permissions
-     */
     public function canUserDoRoleOption($optionName) {
         $roleAllowed = $this->getRoleOption($optionName);
         if ('Anyone' == $roleAllowed) {
@@ -230,10 +120,6 @@ class SupraOpenForm_OptionsManager {
         return $this->isUserRoleEqualOrBetterThan($roleAllowed);
     }
 
-    /**
-     * see: http://codex.wordpress.org/Creating_Options_Pages
-     * @return void
-     */
     public function createSettingsMenu() {
         $pluginName = $this->getPluginDisplayName();
         //create new top-level menu

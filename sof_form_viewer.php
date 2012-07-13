@@ -13,6 +13,7 @@
     wp_enqueue_script( 'global', plugins_url('/js/global.js', __FILE__), array('jquery') );
     wp_enqueue_script( 'form_submission', plugins_url('/js/form_submission.js', __FILE__) );
     wp_enqueue_style( 'form_buildercss', plugins_url('/css/form_builder.css', __FILE__) );
+    wp_enqueue_style( 'form_buildercss', plugins_url('/css/form_viewer.css', __FILE__) );
 
 ?>
 <div id="notify"></div>

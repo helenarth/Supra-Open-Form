@@ -16,6 +16,7 @@
         <th>Form</th>  
         <th>Shortcode</th>  
         <th>Submissions</th>  
+        <th>delete</th>  
       </thead>
       <tbody> 
       <? 
@@ -31,6 +32,7 @@
           <td id="form_name" class="edit_form" data-form-id="<?=$id?>"><?=$f['name']?></td>
           <td id="form_shortcode">[supra-open-form id=<?=$id?>]</td>
           <td id="form_submission_count"><?=$count?> <span class="view_submissions" data-form-id="<?=$f['id']?>">view</span></td>
+          <td id="form_name" class="delete_form" data-form-id="<?=$id?>">delete</td>
         </tr>
        <? endforeach; ?>
       <tbody>

@@ -13,4 +13,8 @@ class PluginBridge {
     public function getTablePrefix($table_name) {
         return $this->aPlugin->prefixTableName($table_name);
     }
+
+    public function getMetaOption($name) {
+        return $this->aPlugin->getOption($name);
+    }
 }

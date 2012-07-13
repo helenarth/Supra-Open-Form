@@ -30,7 +30,7 @@ class AjaxHandler {
     }
 
     public function formSubmission($request) {
-
+        $form = new Form();
         $fi   = new FormInput();
         $fs= new FormSubmission();
 
@@ -52,6 +52,10 @@ class AjaxHandler {
        }
        else if(!empty($request['edit_form'])) {
             echo admin_url('admin.php?page=sof_builder&id='.$request['form_id']);
+       }
+       else if(!empty($request['delete_form'])) {
+            $form->deleteForm($request['form_id']);
+            echo admin_url('admin.php?page=sof_info');
        }
 
     }

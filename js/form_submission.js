@@ -60,6 +60,26 @@ $( function() {
           });
       });
 
+      $('.delete_form').live('click', function() {
+
+          var form_id = $(this).data('form-id');
+
+          if (!confirm('Are you sure you want to delete?')) {
+            return false;
+          }
+          else {
+              $.ajax({
+                  type: "POST",
+                  url: ajaxurl,
+                  data: {delete_form: true, form_id: form_id, action: action},
+                  success: function(link) {
+                     window.location = link;
+                  }
+              });
+          }
+      });
+
+
       $('.view_submissions').live('click', function() {
 
           var form_id = $(this).data('form-id');

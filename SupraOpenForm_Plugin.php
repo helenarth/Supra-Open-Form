@@ -16,7 +16,7 @@ class SupraOpenForm_Plugin extends SupraOpenForm_LifeCycle {
      */
     public function getOptionMetaData() {
         //  http://plugin.michael-simpson.com/?page_id=31
-        return array(
+        return array('notify_email'=>array('Notification Email:')
             //'_version' => array('Installed Version'), // Leave this one commented-out. Uncomment to test upgrades.
         );
     }
