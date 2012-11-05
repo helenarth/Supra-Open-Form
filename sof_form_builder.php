@@ -28,8 +28,10 @@
 
     if($form->hasInstance())
         $form_head['form_id'] = array('type'=>'hidden','value'=>$form->getForm('id'));
-    else 
+    else { 
         $form_head['form_id'] = array('type'=>'hidden','value'=>$form->getNextFormId());
+        $form->clearSession(); 
+    }
 
     $build_tools['add_input']   = array('type'=>'submit','value'=>'Add Input');
     $build_tools['update_input']= array('type'=>'submit','value'=>'Update Input');

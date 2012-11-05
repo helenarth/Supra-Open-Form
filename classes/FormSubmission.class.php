@@ -215,6 +215,20 @@ class FormSubmission {
 
         $form_name = $this->form->getForm('name');
 
+        $email_is_plain = $this->plugin_bridge->getMetaOption('email_is_plain');
+
+        if($email_is_plain == "true")
+            $submission = $this->getPlainTextEmail($form_name,$submission);
+        else
+            $submission = $this->getHtmlEmail($form_name,$submission);
+
+        $displayable = compact('form_name','submission');
+ 
+        return $displayable;
+    }
+
+    private function getHtmlEmail($form_name,$submission) {
+
         $submitted .= $this->form_input->wrapInput('<h2>'.$form_name.'</h2>','form_name');
 
         foreach((array)$submission['submission'] as $k=>$input) {
@@ -233,9 +247,29 @@ class FormSubmission {
             $submitted .= $this->form_input->wrapInput($input_row,'input_row');
         }
 
-        return array('form_name'=>$form_name,'submission'=>$submitted);
+        return $submitted;
     }
 
+    private function getPlainTextEmail($form_name,$submission) {
+
+        $submitted .= "$form_name \r\n\r\n";
+
+        foreach((array)$submission['submission'] as $k=>$input) {
+            $input_row = null;
+
+            if($k === "combobox") {
+                foreach($input as $key=>$val) {
+                    $submitted .= $val['label'] . "\r\n";
+                    $submitted .= implode(',',(array)$val['values']) ."\r\n \r\n";
+                }
+            }
+            else {
+                $submitted .= $input['label'] . "\r\n";
+                $submitted .= $input['value'] . "\r\n \r\n";
+            }
+        }
+        return $submitted;
+    }
 
     private function toString($submission,$field = 'datetime') {
         switch($field) {

@@ -29,6 +29,7 @@ class Form {
 
     public function setForm($id = null,$form = null) {
         if(!empty($id) && empty($form)) {
+            $this->clearForm($id);
             $this->form = $this->getFormById($id);
             $this->loadForm();
         }
@@ -105,15 +106,19 @@ class Form {
     }
 
     //@desc: clear the form from session
-    public function clearForm($form_name) {
+    public function clearForm($form_id) {
         unset($_SESSION['open_form'][$form_id]);
     }
 
     //@desc: load the form into session
-    public function loadForm($form_name=null) {
+    public function loadForm() {
         $_SESSION['open_form'][$this->getForm('id')] = $this->getForm();
     }
-  
+ 
+    public function clearSession() {
+        unset($_SESSION['open_form']);
+    }
+ 
     //@desc: retrieve from from session and store in database
     public function saveForm($request) {
 

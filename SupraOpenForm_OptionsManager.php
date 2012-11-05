@@ -167,56 +167,6 @@ class SupraOpenForm_OptionsManager {
         $settingsGroup = get_class($this) . '-settings-group';
         ?>
         <div class="wrap">
-            <h2><?php _e('System Settings', 'supra-open-form'); ?></h2>
-            <table class="form-table"><tbody>
-            <tr><td><?php _e('System', 'supra-open-form'); ?></td><td><?php echo php_uname(); ?></td></tr>
-            <tr><td><?php _e('PHP Version', 'supra-open-form'); ?></td>
-                <td><?php echo phpversion(); ?>
-                <?php
-                if (version_compare('5.2', phpversion()) > 0) {
-                    echo '&nbsp;&nbsp;&nbsp;<span style="background-color: #ffcc00;">';
-                    _e('(WARNING: This plugin may not work properly with versions earlier than PHP 5.2)', 'supra-open-form');
-                    echo '</span>';
-                }
-                ?>
-                </td>
-            </tr>
-            <tr><td><?php _e('MySQL Version', 'supra-open-form'); ?></td>
-                <td><?php echo $this->getMySqlVersion() ?>
-                    <?php
-                    echo '&nbsp;&nbsp;&nbsp;<span style="background-color: #ffcc00;">';
-                    if (version_compare('5.0', $this->getMySqlVersion()) > 0) {
-                        _e('(WARNING: This plugin may not work properly with versions earlier than MySQL 5.0)', 'supra-open-form');
-                    }
-                    echo '</span>';
-                    ?>
-                </td>
-            </tr>
-            </tbody></table>
-
-            <h2></h2>          
-          
- 
-            <h2>Description</h2>
-<p>
-The purpose of this plugin is to provide blog admin with an interactive form to create, update and display forms throughout the site. Shortcode can be provided in whatever page one wishes to display the form. The shortcodes are provded in the Form Info tab. When creating the form you have the option to provide the landing page or a success message instead. If the landing page is left blank the form will display a success message up submission. You can create the following inputs: select, hidden, checkboxes, radios, textareas and submit buttons. You can provide arbitrary attributes for each input as needed. You can also specify a notifcation email for the submission to be sent to. The code is clean, decoupled and modifiable and the interface is jQuery interactive. The form builder requires simple html knowledge such as what should go in in label, name and value attributes.</p>
-
-            <h2>Contributions</h2>
-            <p>Due to the nature of wordpress and its lack of plugin contribution functionality please fork the following repo.</p>
-            <p><a href="https://github.com/zmijevik/wp_supra_open_form" target="_blank">https://github.com/zmijevik/wp_supra_open_form</a></p>
-            <p>Please keep code encapsulated, lets keep this from turning into a procedural mess!</p>
-            <p>You have my guarantee that this project will <u>remain</u> free and open source.</p>
-            <p>Feel free to contact me @ zmijevik@hotmail.com regarding plugin issues and requests.</p>
-
-            <h2>Future Releases</h2>
-            <p>Below is a list of features that will be added as the development progresses further.</p>
-            <ol>
-              <li>builder interface for non html savvy people</li>
-              <li>ability to shift input position up and down within the form</li>
-              <li>jquery help tooltip optional parameter for all inputs</li>
-              <li>submission display field designator</li>
-              <li>Documentation</li>
-            </ul>
 
             <h2><?php echo $this->getPluginDisplayName(); echo ' '; _e('Settings', 'supra-open-form'); ?></h2>
 
@@ -244,6 +194,59 @@ The purpose of this plugin is to provide blog admin with an interactive form to 
                            value="<?php _e('Save Changes', 'supra-open-form') ?>"/>
                 </p>
             </form>
+
+
+            <h2><?php _e('System Settings', 'supra-open-form'); ?></h2>
+            <table class="form-table"><tbody>
+            <tr><td><?php _e('System', 'supra-open-form'); ?></td><td><?php echo php_uname(); ?></td></tr>
+            <tr><td><?php _e('PHP Version', 'supra-open-form'); ?></td>
+                <td><?php echo phpversion(); ?>
+                <?php
+                if (version_compare('5.2', phpversion()) > 0) {
+                    echo '&nbsp;&nbsp;&nbsp;<span style="background-color: #ffcc00;">';
+                    _e('(WARNING: This plugin may not work properly with versions earlier than PHP 5.2)', 'supra-open-form');
+                    echo '</span>';
+                }
+                ?>
+                </td>
+            </tr>
+            <tr><td><?php _e('MySQL Version', 'supra-open-form'); ?></td>
+                <td><?php echo $this->getMySqlVersion() ?>
+                    <?php
+                    echo '&nbsp;&nbsp;&nbsp;<span style="background-color: #ffcc00;">';
+                    if (version_compare('5.0', $this->getMySqlVersion()) > 0) {
+                        _e('(WARNING: This plugin may not work properly with versions earlier than MySQL 5.0)', 'supra-open-form');
+                    }
+                    echo '</span>';
+                    ?>
+                </td>
+            </tr>
+            </tbody></table>
+
+            <h2>Description</h2>
+<p>
+The purpose of this plugin is to provide blog admin with an interactive form to create, update and display forms throughout the site. Shortcode can be provided in whatever page one wishes to display the form. The shortcodes are provded in the Form Info tab. When creating the form you have the option to provide the landing page or a success message instead. If the landing page is left blank the form will display a success message up submission. You can create the following inputs: select, hidden, checkboxes, radios, textareas and submit buttons. You can provide arbitrary attributes for each input as needed. You can also specify a notifcation email for the submission to be sent to. The code is clean, decoupled and modifiable and the interface is jQuery interactive. The form builder requires simple html knowledge such as what should go in in label, name and value attributes.</p>
+
+
+<h2>Tutorial</h2>
+<iframe width="420" height="315" src="http://www.youtube.com/embed/ATLYNgYRbUU" frameborder="0" allowfullscreen></iframe>
+
+            <h2>Contributions</h2>
+            <p>Due to the nature of wordpress and its lack of plugin contribution functionality please fork the following repo.</p>
+            <p><a href="https://github.com/zmijevik/wp_supra_open_form" target="_blank">https://github.com/zmijevik/wp_supra_open_form</a></p>
+            <p>Please keep code encapsulated, lets keep this from turning into a procedural mess!</p>
+            <p>You have my guarantee that this project will <u>remain</u> free and open source.</p>
+            <p>Feel free to contact me @ zmijevik@hotmail.com regarding plugin issues and requests.</p>
+
+            <h2>Future Releases</h2>
+            <p>Below is a list of features that will be added as the development progresses further.</p>
+            <ol>
+              <li>builder interface for non html savvy people</li>
+              <li>ability to shift input position up and down within the form</li>
+              <li>jquery help tooltip optional parameter for all inputs</li>
+              <li>submission display field designator</li>
+              <li>Documentation</li>
+            </ul>
         </div>
         <?php
 

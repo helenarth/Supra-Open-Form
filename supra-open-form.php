@@ -2,7 +2,7 @@
 /*
    Plugin Name: Supra Open Form
    Plugin URI: http://wordpress.org/extend/plugins/supra-open-form/
-   Version: 0.1
+   Version: 1.3
    Author: J. Persie
    Description: a plugin to create, modify and retrieve forms and manage submissions
    Text Domain: supra-open-form
