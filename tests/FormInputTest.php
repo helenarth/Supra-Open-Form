@@ -22,7 +22,7 @@ $form_input['sex'] = array(
                             'radios'=>array(
                                            array('value'=>'male','label'=>'Male'),
                                            array('value'=>'female','label'=>'Female'),
-                                           array('value'=>'tranny','label'=>'Tranny')
+                                           array('value'=>'other','label'=>'Other')
                                           )
                            );
 
